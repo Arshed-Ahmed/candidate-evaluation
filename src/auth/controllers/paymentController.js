@@ -142,7 +142,7 @@ exports.simulateWalletPayment = asyncErrorHandler(async (req, res, next) => {
   console.log("Simulated Web3 Payment:", { wallet_address, amount, timestamp });
 
   // await Payment.create({ wallet_address, amount, timestamp, isSimulated: true });
-  // Optional: Save it to DB if you have a Payment model for wallet payments
+  // Optional: Can be saved to DB if you have a Payment model for wallet payments
 
   res.status(200).json({
     success: true,
