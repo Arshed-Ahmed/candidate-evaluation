@@ -71,7 +71,7 @@ export const Header = () => {
     };
 
     await axios.post("/api/payment/simulate", mockPayment, {
-      baseURL: window.location.origin // Ensure Axios uses the correct base URL
+      baseURL: window.location.origin
     })
     .then((response) => {
       setStatus("Success: " + response.data.message);
