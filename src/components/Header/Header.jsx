@@ -12,6 +12,7 @@ import { useUserData } from "../../contexts/UserDataProvider.js";
 import { FaWallet } from "react-icons/fa";
 import { BrowserProvider } from "ethers";
 import axios from "axios";
+import { toast } from 'react-hot-toast';
 
 export const Header = () => {
   const { auth } = useAuth();
@@ -43,6 +44,7 @@ export const Header = () => {
   const connectWallet = async () => {
     if (walletAddress) {
       setStatus("Wallet already connected: " + walletAddress);
+      toast.success("Wallet already connected!");
       return;
     }
     try {
@@ -52,14 +54,17 @@ export const Header = () => {
       const address = await signer.getAddress();
       setWalletAddress(address);
       setStatus("Wallet connected: " + address);
+      toast.success("Wallet connected successfully!");
     } catch (err) {
       setStatus("Connection failed: " + err.message);
+      toast.error("Connection failed: " + err.message);
     }
   };
 
   const simulatePayment = async () => {
     if (!walletAddress) {
       setStatus("Connect wallet first");
+      toast.error("Please connect your wallet first!");
       return;
     }
     setIsLoading(true);
@@ -75,17 +80,15 @@ export const Header = () => {
     })
     .then((response) => {
       setStatus("Success: " + response.data.message);
+      toast.success("Payment simulated successfully!");
       setIsLoading(false);
     })
     .catch((error) => {
       setStatus("Payment simulation failed: " + error.message);
+      toast.error("Payment simulation failed: " + error.message);
       setIsLoading(false);
     });
   };
-
-  useEffect(() => {
-    console.log(status);
-  }, [status]);
 
   return (
     <nav>
